@@ -104,11 +104,12 @@ def aleat(*, m=2**31, a=1103515245, c=7, x0=1212121):
     x = x0
     while True:
         # Recibe un nuevo valor de semilla si se usa aleat.send()
-        new_seed = (yield x)
+        new_x = (a * x + c) % m
+        new_seed = (yield new_x)
         if new_seed is not None:
             x = new_seed
         else:
-            x = (a * x + c) % m
+            x = new_x
 
 if __name__ == "__main__":
     import doctest
